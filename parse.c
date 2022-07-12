@@ -33,7 +33,7 @@ static void syntaxError(char * message)
 }
 
 static void match(TokenType expected)
-{ if (token == expected) token = getToken();
+{ if (token == expected){ token = getToken(); }
   else {
     syntaxError("Unexpected token -> ");
     printToken(token,tokenString);
@@ -44,11 +44,14 @@ static void match(TokenType expected)
 TreeNode * stmt_sequence(void)
 { TreeNode * t = statement();
   TreeNode * p = t;
+  match(SEMI);
   while ((token!=ENDFILE) && (token!=ENDIF) &&
          (token!=ELSE) && (token!=UNTIL) && (token!=CASE) && (token!=ENDSWITCH) && (token!=ENDWHILE))
   { TreeNode * q;
-    match(SEMI);
     q = statement();
+    
+    match(SEMI);
+    
     if (q!=NULL) {
       if (t==NULL) t = p = q;
       else /* now p cannot be NULL either */
@@ -56,6 +59,7 @@ TreeNode * stmt_sequence(void)
         p = q;
       }
     }
+    
   }
   return t;
 }

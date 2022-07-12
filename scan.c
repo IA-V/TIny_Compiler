@@ -30,10 +30,10 @@ static int EOF_flag = FALSE; /* corrects ungetNextChar behavior on EOF */
    from lineBuf, reading in a new line if lineBuf is
    exhausted */
 static int getNextChar(void)
-{ if (!(linepos < bufsize))
+{if (!(linepos < bufsize))
   { lineno++;
     if (fgets(lineBuf,BUFLEN-1,source))
-    { if (EchoSource) fprintf(listing,"%4d: %s",lineno,lineBuf);
+    {if (EchoSource) fprintf(listing,"%4d: %s",lineno,lineBuf);
       bufsize = strlen(lineBuf);
       linepos = 0;
       return lineBuf[linepos++];
@@ -86,7 +86,7 @@ TokenType getToken(void)
    /* flag to indicate save to tokenString */
    int save;
    while (state != DONE)
-   { int c = getNextChar();
+   {int c = getNextChar();
      save = TRUE;
      switch (state)
      { case START:
@@ -191,6 +191,7 @@ TokenType getToken(void)
          currentToken = ERROR;
          break;
      }
+     //fprintf(listing,"\n%c Cafe\n", c);
      if ((save) && (tokenStringIndex <= MAXTOKENLEN))
        tokenString[tokenStringIndex++] = (char) c;
      if (state == DONE)
